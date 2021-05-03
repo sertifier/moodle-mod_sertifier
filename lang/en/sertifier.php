@@ -29,3 +29,7 @@ $string['cantchangedelivery'] = 'Delivery cannot be changed. Selected delivery: 
 $string['createdDelivery'] = 'New delivery has been created. After activating, refresh the page. <a href="https://app.sertifier.com/en/home/send/{$a}" target="_blank">Activate Delivery</a>';
 $string['createDelivery'] = "Create new delivery";
 $string['notFoundDelivery'] = 'You don’t have any active delivery yet.';
+$string['modulenameplural'] = 'Sertifier certificates/badges';
+$string['datecreated'] = 'Date created';
+$string['indexheader'] = 'All certificates/badges for {$a}';
+$string['nocertificates'] = 'There are no certificates/badges';
