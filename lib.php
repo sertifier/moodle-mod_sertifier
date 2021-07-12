@@ -23,6 +23,10 @@ function sertifier_add_instance($post){
     }
   }else{
   
+    if(!$post->delivery){
+      print_error("Click the create button to create a new delivery.");
+    }
+
     if( isset($post->users) ) {
         $already_recipients_email = array_column($apiRest->get_recipients($post->delivery)->data->recipients, "email");
         $recipients = [];
