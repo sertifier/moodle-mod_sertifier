@@ -72,10 +72,10 @@ class mod_sertifier_mod_form extends moodleform_mod {
             // Select Old Delivery
             if(count($deliveryFilter)>0){
                 $mform->addElement('select', 'delivery', get_string('selectedDelivery', 'sertifier'), $deliveryFilter,array('style'=>'width: 400px'));
+                $mform->addRule('delivery', null, 'required', null, 'client');
             }else {
                 $mform->addElement('static', 'delivery', get_string('selectedDelivery', 'sertifier'), get_string('notFoundDelivery','sertifier'));
             }
-            $mform->addRule('delivery', null, 'required', null, 'client');
             if(isset($_GET['deliveryId']) && array_key_exists($_GET['deliveryId'],$deliveryFilter)){
                 $mform->setDefault('delivery',$_GET['deliveryId']);
             }
