@@ -1,4 +1,26 @@
 <?php
+// This file is part of the Sertifier Certificate module for Moodle - https://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+
+/**
+ * Language strings for the sertifier module
+ *
+ * @package    mod_sertifier
+ * @copyright  Sertifier <hr@sertifier.com>
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 
 $string['pluginname'] = 'Sertifier certificates & badges';
 
@@ -33,3 +55,12 @@ $string['modulenameplural'] = 'Sertifier certificates/badges';
 $string['datecreated'] = 'Date created';
 $string['indexheader'] = 'All certificates/badges for {$a}';
 $string['nocertificates'] = 'There are no certificates/badges';
+
+$string['privacy:metadata:sertifier'] = 'The list of activity modules';
+$string['privacy:metadata:sertifier:completionactivities'] = 'Auto-issue criteria: by course completion';
+$string['privacy:metadata:sertifier:name'] = 'Module name';
+$string['privacy:metadata:sertifier:course'] = 'Module Course id';
+$string['privacy:metadata:sertifier:finalquiz'] = 'Auto-issue criteria: by final quiz grade';
+$string['privacy:metadata:sertifier:passinggrade'] = 'Percentage grade needed to pass course';
+$string['privacy:metadata:sertifier:timecreated'] = 'The date the module was created';
+$string['privacy:metadata:sertifier:deliveryid'] = 'Sertifier delivery id';

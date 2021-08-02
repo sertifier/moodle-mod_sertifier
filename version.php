@@ -1,6 +1,5 @@
 <?php
-
-// This file is part of the Sertifier Certificate module for Moodle - http://moodle.org/
+// This file is part of the Sertifier Certificate module for Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -13,20 +12,21 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Code fragment to define the version of the certificate module
  *
- * @package    mod
- * @subpackage sertifier
+ * @package    mod_sertifier
  * @copyright  Sertifier <hr@sertifier.com>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$plugin->version   = 2021050300; // The current module version (Date: YYYYMMDDXX)
-$plugin->requires  = 2014051200; // Requires this Moodle version
-$plugin->cron      = 0; // Period for cron to check this module (secs)
+defined('MOODLE_INTERNAL') || die();
+
+$plugin->version   = 2021050300;
+$plugin->requires  = 2014051200;
+$plugin->cron      = 0;
 $plugin->component = 'mod_sertifier';
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = "v1.0.0"; // User-friendly version number
+$plugin->release   = "v1.0.1";
