@@ -23,10 +23,11 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-
-$settings->add(
-	new admin_setting_configtext('sertifier/api_key',
-	get_string('apikeylabel', 'sertifier'),
-	get_string('apikeyhelp', 'sertifier'),
-	'')
-);
+if ($ADMIN->fulltree) {
+	$settings->add(
+		new admin_setting_configtext('sertifier/api_key',
+		get_string('apikeylabel', 'sertifier'),
+		get_string('apikeyhelp', 'sertifier'),
+		'')
+	);
+}
