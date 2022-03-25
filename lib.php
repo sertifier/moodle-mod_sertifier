@@ -29,7 +29,7 @@ defined('MOODLE_INTERNAL') || die();
 function sertifier_add_instance($post) {
     global $DB, $CFG;
 
-    $apirest = new apiRest(get_config('sertifier', 'api_key'));
+    $apirest = new apiRest();
 
     if ($post->createDelivery) {
         $response = $apirest->create_delivery($post->deliveryName);
@@ -86,7 +86,7 @@ function sertifier_add_instance($post) {
 function sertifier_update_instance($post) {
     global $DB, $CFG;
 
-    $apirest = new apiRest(get_config('sertifier', 'api_key'));
+    $apirest = new apiRest();
 
     if ( isset($post->users) ) {
         $alreadyrecipients = $apirest->get_recipients($post->delivery)->data->recipients;
@@ -152,7 +152,7 @@ function delivery_check($delivery) {
 function credential_exist($deliveryid, $email) {
     global $DB, $CFG;
 
-    $apirest = new apiRest(get_config('sertifier', 'api_key'));
+    $apirest = new apiRest();
 
     $recipients = $apirest->get_recipients($deliveryid)->data->recipients;
 
@@ -168,7 +168,7 @@ function credential_exist($deliveryid, $email) {
 function sertifier_quiz_submission_handler($event) {
     global $DB, $CFG;
 
-    $apirest = new apiRest(get_config('sertifier', 'api_key'));
+    $apirest = new apiRest();
 
     $attempt = $event->get_record_snapshot('quiz_attempts', $event->objectid);
     $quiz = $event->get_record_snapshot('quiz', $attempt->quiz);
@@ -205,7 +205,7 @@ function sertifier_quiz_submission_handler($event) {
 function sertifier_course_completed_handler($event) {
     global $DB, $CFG;
 
-    $apirest = new apiRest(get_config('sertifier', 'api_key'));
+    $apirest = new apiRest();
 
     $user = $DB->get_record('user', array('id' => $event->relateduserid));
 

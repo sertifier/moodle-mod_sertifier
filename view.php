@@ -25,7 +25,7 @@
 require_once("../../config.php");
 
 use mod_sertifier\apiRest\apiRest;
-$apirest = new apiRest(get_config('sertifier', 'api_key'));
+$apirest = new apiRest();
 
 $id = required_param('id', PARAM_INT);
 

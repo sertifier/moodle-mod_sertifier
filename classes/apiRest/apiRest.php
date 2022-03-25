@@ -15,16 +15,19 @@ use mod_sertifier\client\client;
 class apiRest {
     /** @var string This variable sertifier b2b api base url */
     private $apiBaseUrl = "https://b2b.sertifier.com";
-    
-    /** @var string This variable sertifier b2b api secret key */
-    private $token;
+
+    /**
+     * HTTP request client.
+     * @var stdObject $client
+     */
+    private $client;
 
     /**
      * @param int   $token This variable sertifier b2b api secret key
      * @return bool A status indicating success or failure
      */
-    public function __construct($token) {
-        $this->token = $token;
+    public function __construct() {
+        $this->client = new client();
     }
 
     /**
@@ -33,7 +36,7 @@ class apiRest {
      * @return stdClass All Deliveries which belong to your organization
      */
     public function get_all_deliveries() {
-        return client::post("{$this->apiBaseUrl}/Delivery/GetAllDeliveries", $this->token, []);
+        return $this->client->post("{$this->apiBaseUrl}/Delivery/GetAllDeliveries", []);
     }
 
     /**
@@ -44,7 +47,7 @@ class apiRest {
      * @return stdClass A status indicating success or failure
      */
     public function add_recipients($deliveryid, $recipients) {
-        return client::post("{$this->apiBaseUrl}/Delivery/AddRecipients", $this->token, [
+        return $this->client->post("{$this->apiBaseUrl}/Delivery/AddRecipients", [
             "deliveryId" => $deliveryid,
             "recipients" => $recipients
         ]);
@@ -57,7 +60,7 @@ class apiRest {
      * @return stdClass All Recipients for a specific Delivery.
      */
     public function get_recipients($deliveryid) {
-        return client::post("{$this->apiBaseUrl}/Delivery/ListRecipients", $this->token, [
+        return $this->client->post("{$this->apiBaseUrl}/Delivery/ListRecipients", [
             "id" => $deliveryid
         ]);
     }
@@ -69,7 +72,7 @@ class apiRest {
      * @return stdClass A status indicating success or failure
      */
     public function delete_recipients($certificatenos) {
-        return client::post("{$this->apiBaseUrl}/Recipient/DeleteCertificates", $this->token, [
+        return $this->client->post("{$this->apiBaseUrl}/Recipient/DeleteCertificates", [
                 "certificateNos" => $certificatenos
             ]);
     }
@@ -81,7 +84,7 @@ class apiRest {
      * @return stdClass A status indicating success or failure
      */
     public function create_delivery($title) {
-        return client::post("{$this->apiBaseUrl}/Moodle/AddDeliveryWithType", $this->token, [
+        return $this->client->post("{$this->apiBaseUrl}/Moodle/AddDeliveryWithType", [
                 "title" => $title,
                 "type" => 2
             ]);

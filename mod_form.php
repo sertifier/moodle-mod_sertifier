@@ -41,7 +41,7 @@ class mod_sertifier_mod_form extends moodleform_mod {
             print_error('Please set your API Key first in the plugin settings.');
         }
 
-        $apirest = new apiRest(get_config('sertifier', 'api_key'));
+        $apirest = new apiRest();
 
         $deliveries = $apirest->get_all_deliveries();
         $deliveryfilter = array();
