@@ -77,6 +77,5 @@ class client {
         $response = $curl->$method($url, json_encode($body), $this->curloptions);
 
         return json_decode($response);
-    
     }
 }

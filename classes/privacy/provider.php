@@ -27,21 +27,13 @@ use core_privacy\local\metadata\collection;
 class provider implements
     \core_privacy\local\metadata\provider {
 
-    public static function get_metadata(collection $items) : collection {
-        $items->add_database_table(
-            'sertifier',
-            [
-                'completionactivities' => 'privacy:metadata:sertifier:completionactivities',
-                'name' => 'privacy:metadata:sertifier:name',
-                'course' => 'privacy:metadata:sertifier:course',
-                'finalquiz' => 'privacy:metadata:sertifier:finalquiz',
-                'passinggrade' => 'privacy:metadata:sertifier:passinggrade',
-                'timecreated' => 'privacy:metadata:sertifier:timecreated',
-                'deliveryid' => 'privacy:metadata:sertifier:deliveryid',
-            ],
-            'privacy:metadata:sertifier'
-        );
+    public static function get_metadata(collection $collection) : collection {
 
-        return $items;
+        $collection->add_external_location_link('sertifier', [
+                'email' => 'privacy:metadata:sertifier:email',
+                'fullname' => 'privacy:metadata:sertifier:fullname',
+            ], 'privacy:metadata:sertifier');
+
+        return $collection;
     }
 }
