@@ -134,7 +134,7 @@ function sertifier_delete_instance($id) {
     return $DB->delete_records('sertifier', array('id' => $id));
 };
 
-function delivery_check($delivery) {
+function sertifier_delivery_check($delivery) {
     if (
         $delivery->type == 2 &&
         $delivery->detailId != "00000000-0000-0000-0000-000000000000" &&
@@ -149,7 +149,7 @@ function delivery_check($delivery) {
     return false;
 }
 
-function credential_exist($deliveryid, $email) {
+function sertifier_credential_exist($deliveryid, $email) {
     global $DB, $CFG;
 
     $apirest = new apiRest();
@@ -180,7 +180,7 @@ function sertifier_quiz_submission_handler($event) {
             if ( $record && ($record->finalquiz) ) {
                 if ($quiz->id == $record->finalquiz) {
 
-                    $checkcredential = credential_exist($record->deliveryid, $user->email);
+                    $checkcredential = sertifier_credential_exist($record->deliveryid, $user->email);
 
                     if (!$checkcredential) {
                         $usersgrade = min( ( quiz_get_best_grade($quiz, $user->id) / $quiz->grade ) * 100, 100);
@@ -213,7 +213,7 @@ function sertifier_course_completed_handler($event) {
     if ($sertifierrecords) {
         foreach ($sertifierrecords as $record) {
             if ($record && $record->completionactivities) {
-                $checkcredential = credential_exist($record->deliveryid, $user->email);
+                $checkcredential = sertifier_credential_exist($record->deliveryid, $user->email);
                 if (!$checkcredential) {
                     $response = $apirest->add_recipients($record->deliveryid, [
                         [

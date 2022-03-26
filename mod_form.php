@@ -46,7 +46,7 @@ class mod_sertifier_mod_form extends moodleform_mod {
         $deliveries = $apirest->get_all_deliveries();
         $deliveryfilter = array();
         foreach ($deliveries->data->deliveries as $delivery) {
-            if (delivery_check($delivery)) {
+            if (sertifier_delivery_check($delivery)) {
                 $deliveryfilter[$delivery->id] = $delivery->title;
             }
         }
