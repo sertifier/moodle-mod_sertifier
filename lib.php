@@ -26,6 +26,20 @@ use mod_sertifier\apiRest\apiRest;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * List of features supported in Sertifier module
+ * @param string $feature FEATURE_xx constant for requested feature
+ * @return mixed True if module supports feature, false if not, null if doesn't know
+ */
+function sertifier_supports($feature) {
+    switch($feature) {
+        case FEATURE_BACKUP_MOODLE2:
+            return true;
+
+        default: return null;
+    }
+}
+
 function sertifier_add_instance($post) {
     global $DB, $CFG;
 
