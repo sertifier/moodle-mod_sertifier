@@ -27,6 +27,10 @@
  */
 class backup_sertifier_activity_structure_step extends backup_activity_structure_step {
 
+    /**
+     * Define the structure for the sertifier activity
+     * @return void
+     */
     protected function define_structure() {
 
         // Define each element separated.

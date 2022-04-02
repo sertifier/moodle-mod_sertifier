@@ -67,7 +67,6 @@ class client {
      * Post request
      *
      * @param string    $url URL to request
-     * @param string    $token This variable sertifier b2b api secret key
      * @param array     $body Request body
      * @return stdClass Request response
      */
@@ -79,7 +78,6 @@ class client {
      * Create request
      *
      * @param string    $url URL to request
-     * @param string    $token This variable sertifier b2b api secret key
      * @param string    $method Request method
      * @param array     $body Request body
      * @return stdClass Request response

@@ -24,9 +24,22 @@
 namespace mod_sertifier\privacy;
 use core_privacy\local\metadata\collection;
 
+/**
+ * Privacy class for requesting user data.
+ *
+ * @package    mod_sertifier
+ * @copyright  Sertifier <hr@sertifier.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class provider implements
     \core_privacy\local\metadata\provider {
 
+    /**
+     * Provides meta data that is stored about a user with mod_sertifier
+     *
+     * @param  collection $collection A collection of meta data items to be added to.
+     * @return  collection Returns the collection of metadata.
+     */
     public static function get_metadata(collection $collection) : collection {
 
         $collection->add_external_location_link('sertifier', [

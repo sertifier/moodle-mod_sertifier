@@ -29,8 +29,21 @@ require_once($CFG->dirroot.'/mod/sertifier/lib.php');
 
 use mod_sertifier\apiRest\apiRest;
 
+/**
+ * Sertifier settings form.
+ *
+ * @package    mod_sertifier
+ * @subpackage sertifier
+ * @copyright  Sertifier <hr@sertifier.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class mod_sertifier_mod_form extends moodleform_mod {
 
+    /**
+     * Called to define this moodle form
+     *
+     * @return void
+     */
     public function definition() {
         global $CFG, $DB, $OUTPUT;
         $updatingcert = false;

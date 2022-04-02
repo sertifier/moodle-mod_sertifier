@@ -15,6 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Define all the restore steps that will be used by the restore_sertifier_activity_task
  * @package    mod_sertifier
  * @subpackage backup-moodle2
  * @copyright  Sertifier <hr@sertifier.com>
@@ -22,14 +23,15 @@
  */
 
 /**
- * Define all the restore steps that will be used by the restore_sertifier_activity_task
- */
-
-/**
  * Structure step to restore one sertifier activity
  */
 class restore_sertifier_activity_structure_step extends restore_activity_structure_step {
 
+    /**
+     * Define the structure of the restore workflow.
+     *
+     * @return restore_path_element $structure
+     */
     protected function define_structure() {
 
         $paths = array();
@@ -39,6 +41,12 @@ class restore_sertifier_activity_structure_step extends restore_activity_structu
         return $this->prepare_activity_structure($paths);
     }
 
+    /**
+     * Process an sertifier restore.
+     *
+     * @param object $data The data in object form
+     * @return void
+     */
     protected function process_sertifier($data) {
         global $DB;
 
@@ -52,6 +60,10 @@ class restore_sertifier_activity_structure_step extends restore_activity_structu
         $this->apply_activity_instance($newitemid);
     }
 
+    /**
+     * Once the database tables have been fully restored, restore the files
+     * @return void
+     */
     protected function after_execute() {
         // Add sertifier related files, no need to match by itemname (just internally handled context).
         $this->add_related_files('mod_sertifier', 'name', null);

@@ -36,8 +36,7 @@ class apiRest {
     private $client;
 
     /**
-     * @param int   $token This variable sertifier b2b api secret key
-     * @return bool A status indicating success or failure
+     * Constructor method to define correct endpoints
      */
     public function __construct() {
         $this->client = new client();

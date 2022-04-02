@@ -22,6 +22,9 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+/**
+ * Function to update the sertifier db.
+ */
 function xmldb_sertifier_upgrade() {
     return true;
 }

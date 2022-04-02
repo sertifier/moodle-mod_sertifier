@@ -15,9 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Define all the backup steps that will be used by the backup_sertifier_activity_task
  * @package    mod_sertifier
  * @subpackage backup-moodle2
- * @copyright  Sertifier <hr@sertifier.com>
+ * @copyright  Sertifier <hr@sertifier.com> {@link https://sertifier.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -26,8 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot . '/mod/sertifier/backup/moodle2/restore_sertifier_stepslib.php');
 
 /**
- * sertifier restore task that provides all the settings and steps to perform one
- * complete restore of the activity
+ * Sertifier restore task that provides all the settings and steps to perform one complete restore of the activity
  */
 class restore_sertifier_activity_task extends restore_activity_task {
 

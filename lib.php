@@ -41,6 +41,12 @@ function sertifier_supports($feature) {
     }
 }
 
+/**
+ * Add certificate instance.
+ *
+ * @param stdObject $post
+ * @return array $certificate new certificate object
+ */
 function sertifier_add_instance($post) {
     global $DB, $CFG;
 
@@ -98,6 +104,12 @@ function sertifier_add_instance($post) {
     }
 };
 
+/**
+ * Update certificate instance.
+ *
+ * @param stdClass $post
+ * @return stdClass $certificate updated
+ */
 function sertifier_update_instance($post) {
     global $DB, $CFG;
 
@@ -139,6 +151,13 @@ function sertifier_update_instance($post) {
     return $DB->update_record('sertifier', $dbrecord);
 };
 
+/**
+ * Given an ID of an instance of this module,
+ * this function will permanently delete the instance.
+ *
+ * @param int $id
+ * @return bool true if successful
+ */
 function sertifier_delete_instance($id) {
     global $DB;
 
@@ -149,6 +168,12 @@ function sertifier_delete_instance($id) {
     return $DB->delete_records('sertifier', array('id' => $id));
 };
 
+/**
+ * Checking if the delivery is active.
+ *
+ * @param stdObject $delivery
+ * @return bool true if active
+ */
 function sertifier_delivery_check($delivery) {
     if (
         $delivery->type == 2 &&
@@ -165,6 +190,13 @@ function sertifier_delivery_check($delivery) {
     return false;
 }
 
+/**
+ * Checking if the credential is exist.
+ *
+ * @param string $deliveryid
+ * @param string $email
+ * @return bool true if exist
+ */
 function sertifier_credential_exist($deliveryid, $email) {
     global $DB, $CFG;
 
@@ -181,6 +213,11 @@ function sertifier_credential_exist($deliveryid, $email) {
     }
 }
 
+/**
+ * Quiz submission handler (checks for a completed course)
+ *
+ * @param core/event $event quiz mod attempt_submitted event
+ */
 function sertifier_quiz_submission_handler($event) {
     global $DB, $CFG;
 
@@ -218,6 +255,11 @@ function sertifier_quiz_submission_handler($event) {
     }
 }
 
+/**
+ * Course completion handler
+ *
+ * @param core/event $event
+ */
 function sertifier_course_completed_handler($event) {
     global $DB, $CFG;
 
