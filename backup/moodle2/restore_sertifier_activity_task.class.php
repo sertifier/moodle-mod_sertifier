@@ -18,7 +18,7 @@
  * Define all the backup steps that will be used by the backup_sertifier_activity_task
  * @package    mod_sertifier
  * @subpackage backup-moodle2
- * @copyright  Sertifier <hr@sertifier.com> {@link https://www.sertifier.com}
+ * @copyright  Sertifier <hr@sertifier.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -73,9 +73,8 @@ class restore_sertifier_activity_task extends restore_activity_task {
 
     /**
      * Define the restore log rules that will be applied
-     * by the {@link restore_logs_processor} when restoring
-     * sertifier logs. It must return one array
-     * of {@link restore_log_rule} objects
+     * when restoring sertifier logs. It must return
+     * one array of objects
      */
     public static function define_restore_log_rules() {
         $rules = array();
@@ -89,9 +88,8 @@ class restore_sertifier_activity_task extends restore_activity_task {
 
     /**
      * Define the restore log rules that will be applied
-     * by the {@link restore_logs_processor} when restoring
-     * course logs. It must return one array
-     * of {@link restore_log_rule} objects
+     * when restoring course logs. It must return
+     * one array of objects
      *
      * Note this rules are applied when restoring course logs
      * by the restore final task, but are defined here at
