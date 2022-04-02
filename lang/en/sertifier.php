@@ -55,6 +55,7 @@ $string['modulenameplural'] = 'Sertifier certificates/badges';
 $string['datecreated'] = 'Date created';
 $string['indexheader'] = 'All certificates/badges for {$a}';
 $string['nocertificates'] = 'There are no certificates/badges';
+$string['sertifier:addinstance'] = 'Add a certificate/badge instance';
 
 $string['privacy:metadata:sertifier'] = 'In order to integrate with sertifier, user data needs to be exchanged with that service.';
 $string['privacy:metadata:sertifier:fullname'] = 'Your full name is sent to the remote system to create credentials.';
