@@ -18,7 +18,7 @@
  * Define all the backup steps that will be used by the backup_sertifier_activity_task
  * @package    mod_sertifier
  * @subpackage backup-moodle2
- * @copyright  Sertifier <hr@sertifier.com> {@link https://sertifier.com}
+ * @copyright  Sertifier <hr@sertifier.com> {@link https://www.sertifier.com}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
