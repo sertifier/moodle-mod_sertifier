@@ -32,7 +32,7 @@ require_once($CFG->dirroot.'/mod/sertifier/lib.php');
 use mod_sertifier\apiRest\apiRest;
 
 class mod_sertifier_mod_form extends moodleform_mod {
- 
+
     public function definition() {
         global $CFG, $DB, $OUTPUT;
         $updatingcert = false;
@@ -69,7 +69,7 @@ class mod_sertifier_mod_form extends moodleform_mod {
 
         $quizchoices = array(0 => 'None');
         if ($quizes = $DB->get_records_select('quiz', 'course = :course_id', array('course_id' => $id) )) {
-            foreach($quizes as $quiz) {
+            foreach ($quizes as $quiz) {
                 $quizchoices[$quiz->id] = $quiz->name;
             }
         }
@@ -111,7 +111,7 @@ class mod_sertifier_mod_form extends moodleform_mod {
         $mform->addElement('header', 'chooseusers', get_string('selectRecHeader', 'sertifier'));
         $this->add_checkbox_controller(1, 'Select All/None');
 
-        foreach($users as $user) {
+        foreach ($users as $user) {
             if ($updatingcert) {
                 $key = array_search($user->email, array_column($recipients, "email"));
                 if ($key !== false) {

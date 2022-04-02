@@ -1,16 +1,29 @@
 <?php
-/**
- * Requests with curl
- *
- * @package    mod_sertifier
- * @category   backup
- * @copyright  2021 Faruk Arig
- * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+// This file is part of the Sertifier Certificate module for Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace mod_sertifier\client;
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Requests with curl
+ *
+ * @package    mod_sertifier
+ * @copyright  2021 Faruk Arig
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class client {
     /**
      * The curl object used to make the request.

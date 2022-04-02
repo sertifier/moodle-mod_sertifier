@@ -46,75 +46,75 @@ $PAGE->set_heading(format_string($course->fullname));
 
 if (has_capability('mod/sertifier:manage', $context)) {
 
-	$credentials = $apirest->get_recipients($sertifierrecord->deliveryid)->data->recipients;
+    $credentials = $apirest->get_recipients($sertifierrecord->deliveryid)->data->recipients;
 
-	$buttonstyle = "display: inline-block; line-height:28px; padding: 0 16px; border: 2px solid #09705b; font-size:12px; background:#09705b; color: #fff; border-radius: 5px; margin-right: 15px; transition: all .3s ease 0s!important;";
-	$buttononmouseover = "this.style.background='#FFF'; this.style.color='#09705b'; this.style.borderColor='#bfe3d9'; this.style.textDecoration='none';";
-	$buttononmouseout = "this.style.background='#09705b'; this.style.color='#FFF'; this.style.borderColor='#09705b';";
+    $buttonstyle = "display: inline-block; line-height:28px; padding: 0 16px; border: 2px solid #09705b; font-size:12px; background:#09705b; color: #fff; border-radius: 5px; margin-right: 15px; transition: all .3s ease 0s!important;";
+    $buttononmouseover = "this.style.background='#FFF'; this.style.color='#09705b'; this.style.borderColor='#bfe3d9'; this.style.textDecoration='none';";
+    $buttononmouseout = "this.style.background='#09705b'; this.style.color='#FFF'; this.style.borderColor='#09705b';";
 
-	$table = new html_table();
-	$table->head = [
-		get_string('name', 'sertifier'), 
-		get_string('email', 'sertifier'), 
-		get_string('credentialNo', 'sertifier'), 
-		get_string('issueDate', 'sertifier')
-	];
+    $table = new html_table();
+    $table->head = [
+        get_string('name', 'sertifier'), 
+        get_string('email', 'sertifier'), 
+        get_string('credentialNo', 'sertifier'), 
+        get_string('issueDate', 'sertifier')
+    ];
 
-	foreach ($credentials as $credential) {
-		$date = date_format( date_create($credential->createDate), "M d, Y" );
-		$url = 'https://verified.cv/en/verify/'.$credential->certificateNo;
-		$table->data[] = array (
-			$credential->name,
-			$credential->email,
-			"<a href='$url' target='_blank'>$credential->certificateNo</a>",
-			$date
-		);
-	}
+    foreach ($credentials as $credential) {
+        $date = date_format( date_create($credential->createDate), "M d, Y" );
+        $url = 'https://verified.cv/en/verify/'.$credential->certificateNo;
+        $table->data[] = array (
+            $credential->name,
+            $credential->email,
+            "<a href='$url' target='_blank'>$credential->certificateNo</a>",
+            $date
+        );
+    }
 
-	echo $OUTPUT->header();
+    echo $OUTPUT->header();
 
-	echo html_writer::tag( 'h3', $sertifierrecord->name);
+    echo html_writer::tag( 'h3', $sertifierrecord->name);
 
-	echo html_writer::tag( 'p', get_string('viewmanagementdesc', 'sertifier') );
-	echo html_writer::tag( 'a', get_string('gotoreports', 'sertifier'), [
-		"href" => "https://app.sertifier.com/en/home/reports?deliveryId=" . $sertifierrecord->deliveryid,
-		"target" => "_blank",
-		"style" => $buttonstyle,
-		"onMouseOver" => $buttononmouseover,
-		"onMouseOut" => $buttononmouseout
-	]);
+    echo html_writer::tag( 'p', get_string('viewmanagementdesc', 'sertifier') );
+    echo html_writer::tag( 'a', get_string('gotoreports', 'sertifier'), [
+        "href" => "https://app.sertifier.com/en/home/reports?deliveryId=" . $sertifierrecord->deliveryid,
+        "target" => "_blank",
+        "style" => $buttonstyle,
+        "onMouseOver" => $buttononmouseover,
+        "onMouseOut" => $buttononmouseout
+    ]);
 
-	echo html_writer::tag( 'br', null );
-	echo html_writer::table($table);
-	echo $OUTPUT->footer($course);
+    echo html_writer::tag( 'br', null );
+    echo html_writer::table($table);
+    echo $OUTPUT->footer($course);
 } else {
-	echo $OUTPUT->header();
+    echo $OUTPUT->header();
 
-	$credential = false;
-	$credentials = $apirest->get_recipients($sertifierrecord->deliveryid)->data->recipients;
-	$key = array_search($USER->email, array_column($credentials, "email"));
-	if ($key !== false) {
-		$credential = $credentials[$key];
-	}
+    $credential = false;
+    $credentials = $apirest->get_recipients($sertifierrecord->deliveryid)->data->recipients;
+    $key = array_search($USER->email, array_column($credentials, "email"));
+    if ($key !== false) {
+        $credential = $credentials[$key];
+    }
 
-	$buttonstyle = "display: inline-block; line-height:28px; padding: 0 16px; border: 2px solid #09705b; font-size:12px; background:#09705b; color: #fff; border-radius: 5px; margin-right: 15px; transition: all .3s ease 0s!important;";
-	$buttononmouseover = "this.style.background='#FFF'; this.style.color='#09705b'; this.style.borderColor='#bfe3d9'; this.style.textDecoration='none';";
-	$buttononmouseout = "this.style.background='#09705b'; this.style.color='#FFF'; this.style.borderColor='#09705b';";
+    $buttonstyle = "display: inline-block; line-height:28px; padding: 0 16px; border: 2px solid #09705b; font-size:12px; background:#09705b; color: #fff; border-radius: 5px; margin-right: 15px; transition: all .3s ease 0s!important;";
+    $buttononmouseover = "this.style.background='#FFF'; this.style.color='#09705b'; this.style.borderColor='#bfe3d9'; this.style.textDecoration='none';";
+    $buttononmouseout = "this.style.background='#09705b'; this.style.color='#FFF'; this.style.borderColor='#09705b';";
 
-	echo html_writer::tag( 'h3', $sertifierrecord->name);
+    echo html_writer::tag( 'h3', $sertifierrecord->name);
 
-	if ($credential) {
-		echo html_writer::tag( 'p', get_string('existcertificate', 'sertifier') );
-		echo html_writer::tag( 'a', get_string('viewcredential', 'sertifier'), [
-			"href" => "https://verified.cv/en/verify/" . $credential->certificateNo,
-			"target" => "_blank",
-			"style" => $buttonstyle,
-			"onMouseOver" => $buttononmouseover,
-			"onMouseOut" => $buttononmouseout
-		]);
-	} else {
-		echo html_writer::tag( 'p', get_string('nonexistcertificate', 'sertifier') );
-	}
+    if ($credential) {
+        echo html_writer::tag( 'p', get_string('existcertificate', 'sertifier') );
+        echo html_writer::tag( 'a', get_string('viewcredential', 'sertifier'), [
+            "href" => "https://verified.cv/en/verify/" . $credential->certificateNo,
+            "target" => "_blank",
+            "style" => $buttonstyle,
+            "onMouseOver" => $buttononmouseover,
+            "onMouseOut" => $buttononmouseout
+        ]);
+    } else {
+        echo html_writer::tag( 'p', get_string('nonexistcertificate', 'sertifier') );
+    }
 
-	echo $OUTPUT->footer($course);
+    echo $OUTPUT->footer($course);
 }

@@ -36,7 +36,8 @@ function sertifier_supports($feature) {
         case FEATURE_BACKUP_MOODLE2:
             return true;
 
-        default: return null;
+        default:
+            return null;
     }
 }
 
@@ -174,7 +175,7 @@ function sertifier_credential_exist($deliveryid, $email) {
 
     if (in_array($email, $recipientemails)) {
         return true;
-    }else {
+    } else {
         return false;
     }
 }

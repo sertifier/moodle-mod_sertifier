@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -52,10 +51,10 @@ class backup_sertifier_activity_task extends backup_activity_task {
      * @param string $content
      * @return string
      */
-    static public function encode_content_links($content) {
+    public static function encode_content_links($content) {
         global $CFG;
 
-        $base = preg_quote($CFG->wwwroot.'/mod/sertifier','#');
+        $base = preg_quote($CFG->wwwroot.'/mod/sertifier', '#');
 
         $pattern = '#('.$base.'/index\.php\?id=)([0-9]+)#';
         $replacement = '$@SERTIFIERINDEX*$2@$';

@@ -1,20 +1,33 @@
 <?php
-/**
- * Sertifier B2B api
- *
- * @package    mod_sertifier
- * @category   backup
- * @copyright  2021 Faruk Arig
- * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+// This file is part of the Sertifier Certificate module for Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace mod_sertifier\apiRest;
 
 use mod_sertifier\client\client;
 
+/**
+ * Sertifier B2B api
+ *
+ * @package    mod_sertifier
+ * @copyright  2021 Faruk Arig
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class apiRest {
     /** @var string This variable sertifier b2b api base url */
-    private $apiBaseUrl = "https://b2b.sertifier.com";
+    private $apibaseurl = "https://b2b.sertifier.com";
 
     /**
      * HTTP request client.
@@ -36,7 +49,7 @@ class apiRest {
      * @return stdClass All Deliveries which belong to your organization
      */
     public function get_all_deliveries() {
-        return $this->client->post("{$this->apiBaseUrl}/Delivery/GetAllDeliveries", []);
+        return $this->client->post("{$this->apibaseurl}/Delivery/GetAllDeliveries", []);
     }
 
     /**
@@ -47,7 +60,7 @@ class apiRest {
      * @return stdClass A status indicating success or failure
      */
     public function add_recipients($deliveryid, $recipients) {
-        return $this->client->post("{$this->apiBaseUrl}/Delivery/AddRecipients", [
+        return $this->client->post("{$this->apibaseurl}/Delivery/AddRecipients", [
             "deliveryId" => $deliveryid,
             "recipients" => $recipients
         ]);
@@ -60,7 +73,7 @@ class apiRest {
      * @return stdClass All Recipients for a specific Delivery.
      */
     public function get_recipients($deliveryid) {
-        return $this->client->post("{$this->apiBaseUrl}/Delivery/ListRecipients", [
+        return $this->client->post("{$this->apibaseurl}/Delivery/ListRecipients", [
             "id" => $deliveryid
         ]);
     }
@@ -72,7 +85,7 @@ class apiRest {
      * @return stdClass A status indicating success or failure
      */
     public function delete_recipients($certificatenos) {
-        return $this->client->post("{$this->apiBaseUrl}/Recipient/DeleteCertificates", [
+        return $this->client->post("{$this->apibaseurl}/Recipient/DeleteCertificates", [
                 "certificateNos" => $certificatenos
             ]);
     }
@@ -84,7 +97,7 @@ class apiRest {
      * @return stdClass A status indicating success or failure
      */
     public function create_delivery($title) {
-        return $this->client->post("{$this->apiBaseUrl}/Moodle/AddDeliveryWithType", [
+        return $this->client->post("{$this->apibaseurl}/Moodle/AddDeliveryWithType", [
                 "title" => $title,
                 "type" => 2
             ]);

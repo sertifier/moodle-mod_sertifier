@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -25,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die;
 
- /**
+/**
  * Define the complete sertifier structure for backup, with file and id annotations
  */
 class backup_sertifier_activity_structure_step extends backup_activity_structure_step {
@@ -35,7 +34,7 @@ class backup_sertifier_activity_structure_step extends backup_activity_structure
         // Define each element separated
         $sertifier = new backup_nested_element('sertifier', array('id'), array(
             'name', 'achievementid', 'description', 'finalquiz',
-            'passinggrade', 'completionactivities', 'timecreated', 'certificatename','deliveryid'));
+            'passinggrade', 'completionactivities', 'timecreated', 'certificatename', 'deliveryid'));
 
         // Define sources
         $sertifier->set_source_table('sertifier', array('id' => backup::VAR_ACTIVITYID));
