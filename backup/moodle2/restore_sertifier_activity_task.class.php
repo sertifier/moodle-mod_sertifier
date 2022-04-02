@@ -42,7 +42,7 @@ class restore_sertifier_activity_task extends restore_activity_task {
      * Define (add) particular steps this activity can have
      */
     protected function define_my_steps() {
-        // sertifier only has one structure step.
+        // Sertifier only has one structure step.
         $this->add_step(new restore_sertifier_activity_structure_step('sertifier_structure', 'sertifier.xml'));
     }
 

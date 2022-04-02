@@ -130,8 +130,10 @@ class mod_sertifier_mod_form extends moodleform_mod {
             if ($updatingcert) {
                 $key = array_search($user->email, array_column($recipients, "email"));
                 if ($key !== false) {
-                    $link = "<a href='https://verified.cv/en/verify/".$recipients[$key]->certificateNo."' target='_blank'>View Credential</a>";
-                    $label = $user->firstname . ' ' . $user->lastname . ' - ' . $user->email . ' - ' . $link ;
+                    $link = "<a href='https://verified.cv/en/verify/" .
+                        $recipients[$key]->certificateNo .
+                        "' target='_blank'>View Credential</a>";
+                    $label = $user->firstname . ' ' . $user->lastname . ' - ' . $user->email . ' - ' . $link;
                     $mform->addElement('advcheckbox', 'users['.$user->id.']', $label);
                     $mform->setDefault('users['.$user->id.']', 1);
                 } else {
