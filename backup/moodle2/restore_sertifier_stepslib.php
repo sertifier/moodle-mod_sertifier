@@ -35,7 +35,7 @@ class restore_sertifier_activity_structure_step extends restore_activity_structu
         $paths = array();
         $paths[] = new restore_path_element('sertifier', '/activity/sertifier');
 
-        // Return the paths wrapped into standard activity structure
+        // Return the paths wrapped into standard activity structure.
         return $this->prepare_activity_structure($paths);
     }
 
@@ -46,14 +46,14 @@ class restore_sertifier_activity_structure_step extends restore_activity_structu
         $oldid = $data->id;
         $data->course = $this->get_courseid();
 
-        // insert the sertifier record
+        // Insert the sertifier record.
         $newitemid = $DB->insert_record('sertifier', $data);
-        // immediately after inserting "activity" record, call this
+        // Immediately after inserting "activity" record, call this.
         $this->apply_activity_instance($newitemid);
     }
 
     protected function after_execute() {
-        // Add sertifier related files, no need to match by itemname (just internally handled context)
+        // Add sertifier related files, no need to match by itemname (just internally handled context).
         $this->add_related_files('mod_sertifier', 'name', null);
     }
 }

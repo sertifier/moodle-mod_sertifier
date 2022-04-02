@@ -15,7 +15,6 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace mod_sertifier\client;
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Requests with curl

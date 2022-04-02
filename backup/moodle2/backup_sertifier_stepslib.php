@@ -22,8 +22,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die;
-
 /**
  * Define the complete sertifier structure for backup, with file and id annotations
  */
@@ -31,18 +29,18 @@ class backup_sertifier_activity_structure_step extends backup_activity_structure
 
     protected function define_structure() {
 
-        // Define each element separated
+        // Define each element separated.
         $sertifier = new backup_nested_element('sertifier', array('id'), array(
             'name', 'achievementid', 'description', 'finalquiz',
             'passinggrade', 'completionactivities', 'timecreated', 'certificatename', 'deliveryid'));
 
-        // Define sources
+        // Define sources.
         $sertifier->set_source_table('sertifier', array('id' => backup::VAR_ACTIVITYID));
 
-        // Define file annotations
-        $sertifier->annotate_files('mod_sertifier', 'name', null); // This file area hasn't itemid
+        // Define file annotations.
+        $sertifier->annotate_files('mod_sertifier', 'name', null); // This file area hasn't itemid.
 
-        // Return the root element (sertifier), wrapped into standard activity structure
+        // Return the root element (sertifier), wrapped into standard activity structure.
         return $this->prepare_activity_structure($sertifier);
 
     }

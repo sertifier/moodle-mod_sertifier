@@ -48,15 +48,11 @@ if (has_capability('mod/sertifier:manage', $context)) {
 
     $credentials = $apirest->get_recipients($sertifierrecord->deliveryid)->data->recipients;
 
-    $buttonstyle = "display: inline-block; line-height:28px; padding: 0 16px; border: 2px solid #09705b; font-size:12px; background:#09705b; color: #fff; border-radius: 5px; margin-right: 15px; transition: all .3s ease 0s!important;";
-    $buttononmouseover = "this.style.background='#FFF'; this.style.color='#09705b'; this.style.borderColor='#bfe3d9'; this.style.textDecoration='none';";
-    $buttononmouseout = "this.style.background='#09705b'; this.style.color='#FFF'; this.style.borderColor='#09705b';";
-
     $table = new html_table();
     $table->head = [
-        get_string('name', 'sertifier'), 
-        get_string('email', 'sertifier'), 
-        get_string('credentialNo', 'sertifier'), 
+        get_string('name', 'sertifier'),
+        get_string('email', 'sertifier'),
+        get_string('credentialNo', 'sertifier'),
         get_string('issueDate', 'sertifier')
     ];
 
@@ -79,9 +75,7 @@ if (has_capability('mod/sertifier:manage', $context)) {
     echo html_writer::tag( 'a', get_string('gotoreports', 'sertifier'), [
         "href" => "https://app.sertifier.com/en/home/reports?deliveryId=" . $sertifierrecord->deliveryid,
         "target" => "_blank",
-        "style" => $buttonstyle,
-        "onMouseOver" => $buttononmouseover,
-        "onMouseOut" => $buttononmouseout
+        "class" => "button"
     ]);
 
     echo html_writer::tag( 'br', null );
@@ -97,10 +91,6 @@ if (has_capability('mod/sertifier:manage', $context)) {
         $credential = $credentials[$key];
     }
 
-    $buttonstyle = "display: inline-block; line-height:28px; padding: 0 16px; border: 2px solid #09705b; font-size:12px; background:#09705b; color: #fff; border-radius: 5px; margin-right: 15px; transition: all .3s ease 0s!important;";
-    $buttononmouseover = "this.style.background='#FFF'; this.style.color='#09705b'; this.style.borderColor='#bfe3d9'; this.style.textDecoration='none';";
-    $buttononmouseout = "this.style.background='#09705b'; this.style.color='#FFF'; this.style.borderColor='#09705b';";
-
     echo html_writer::tag( 'h3', $sertifierrecord->name);
 
     if ($credential) {
@@ -108,9 +98,7 @@ if (has_capability('mod/sertifier:manage', $context)) {
         echo html_writer::tag( 'a', get_string('viewcredential', 'sertifier'), [
             "href" => "https://verified.cv/en/verify/" . $credential->certificateNo,
             "target" => "_blank",
-            "style" => $buttonstyle,
-            "onMouseOver" => $buttononmouseover,
-            "onMouseOut" => $buttononmouseout
+            "class" => "button"
         ]);
     } else {
         echo html_writer::tag( 'p', get_string('nonexistcertificate', 'sertifier') );

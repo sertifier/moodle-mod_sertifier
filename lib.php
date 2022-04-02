@@ -49,7 +49,7 @@ function sertifier_add_instance($post) {
     if ($post->createDelivery) {
         $response = $apirest->create_delivery($post->deliveryName);
         if ($response->hasError) {
-            print_error($response->message);
+            throw new moodle_exception($response->message);
         } else {
             $url = new moodle_url('/course/modedit.php', [
                 'add' => 'sertifier',
@@ -63,7 +63,7 @@ function sertifier_add_instance($post) {
     } else {
 
         if (!$post->delivery) {
-            print_error("Click the create button to create a new delivery.");
+            throw new moodle_exception("Click the create button to create a new delivery.");
         }
 
         if ( isset($post->users) ) {
@@ -153,7 +153,8 @@ function sertifier_delivery_check($delivery) {
     if (
         $delivery->type == 2 &&
         $delivery->detailId != "00000000-0000-0000-0000-000000000000" &&
-        ($delivery->designId != "00000000-0000-0000-0000-000000000000" || $delivery->badgeId != "00000000-0000-0000-0000-000000000000") &&
+        ($delivery->designId != "00000000-0000-0000-0000-000000000000" ||
+            $delivery->badgeId != "00000000-0000-0000-0000-000000000000") &&
         $delivery->emailTemplateId != "00000000-0000-0000-0000-000000000000" &&
         !empty($delivery->emailFromName) &&
         !empty($delivery->mailSubject)

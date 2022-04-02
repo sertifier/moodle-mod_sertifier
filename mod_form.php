@@ -22,9 +22,7 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-if (!defined('MOODLE_INTERNAL')) {
-    die('Direct access to this script is forbidden.');
-}
+defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
 require_once($CFG->dirroot.'/mod/sertifier/lib.php');
@@ -38,7 +36,7 @@ class mod_sertifier_mod_form extends moodleform_mod {
         $updatingcert = false;
 
         if (get_config('sertifier', 'api_key') == null) {
-            print_error('Please set your API Key first in the plugin settings.');
+            throw new moodle_exception('Please set your API Key first in the plugin settings.');
         }
 
         $apirest = new apiRest();
@@ -77,29 +75,46 @@ class mod_sertifier_mod_form extends moodleform_mod {
         $mform =& $this->_form;
         $mform->addElement('hidden', 'course', $id);
         $mform->addElement('header', 'general', get_string('general', 'form'));
-        $mform->addElement('static', 'overview', get_string('overview', 'sertifier'), get_string('activitydescription', 'sertifier'));
+        $mform->addElement('static',
+            'overview',
+            get_string('overview', 'sertifier'),
+            get_string('activitydescription', 'sertifier'));
         if (!$updatingcert) {
             if (isset($_GET['deliveryId'])) {
                 $mform->addElement('static', 'edit', '', get_string('createdDelivery', 'sertifier', $_GET['deliveryId']));
             } else {
                 $newdelivery = array();
                 $newdelivery[] =& $mform->createElement('text', 'deliveryName', "Delivery Name", ['style' => 'width: 296px']);
-                $newdelivery[] =& $mform->createElement('submit', 'createDelivery', get_string('create'), ['style' => 'width: 100px']);
+                $newdelivery[] =& $mform->createElement('submit',
+                    'createDelivery',
+                    get_string('create'),
+                    ['style' => 'width: 100px']);
                 $mform->addGroup($newdelivery, 'new_delivery', get_string('createDelivery', 'sertifier'), array(' '), false);
             }
 
             if (count($deliveryfilter) > 0) {
-                $mform->addElement('select', 'delivery', get_string('selectedDelivery', 'sertifier'), $deliveryfilter, array('style' => 'width: 400px'));
+                $mform->addElement('select',
+                    'delivery',
+                    get_string('selectedDelivery', 'sertifier'),
+                    $deliveryfilter,
+                    array('style' => 'width: 400px'));
                 $mform->addRule('delivery', null, 'required', null, 'client');
             } else {
-                $mform->addElement('static', 'delivery', get_string('selectedDelivery', 'sertifier'), get_string('notFoundDelivery', 'sertifier'));
+                $mform->addElement('static',
+                    'delivery',
+                    get_string('selectedDelivery', 'sertifier'),
+                    get_string('notFoundDelivery', 'sertifier'));
             }
             if (isset($_GET['deliveryId']) && array_key_exists($_GET['deliveryId'], $deliveryfilter)) {
                 $mform->setDefault('delivery', $_GET['deliveryId']);
             }
         } else {
             $deliveryname = $deliveryfilter[$sertifiercertificate->deliveryid];
-            $mform->addElement('static', 'selectdelivery', get_string('selectedDelivery', 'sertifier'), get_string('cantchangedelivery', 'sertifier', $deliveryname));
+            $mform->addElement('static',
+                'selectdelivery',
+                get_string('selectedDelivery', 'sertifier'),
+                get_string('cantchangedelivery', 'sertifier',
+                $deliveryname));
             $mform->addElement('hidden', 'delivery', $sertifiercertificate->deliveryid);
         }
 
@@ -115,7 +130,8 @@ class mod_sertifier_mod_form extends moodleform_mod {
             if ($updatingcert) {
                 $key = array_search($user->email, array_column($recipients, "email"));
                 if ($key !== false) {
-                    $label = $user->firstname . ' ' . $user->lastname . ' - ' . $user->email . " - <a href='https://verified.cv/en/verify/".$recipients[$key]->certificateNo."' target='_blank'>View Credential</a>";
+                    $link = "<a href='https://verified.cv/en/verify/".$recipients[$key]->certificateNo."' target='_blank'>View Credential</a>";
+                    $label = $user->firstname . ' ' . $user->lastname . ' - ' . $user->email . ' - ' . $link ;
                     $mform->addElement('advcheckbox', 'users['.$user->id.']', $label);
                     $mform->setDefault('users['.$user->id.']', 1);
                 } else {

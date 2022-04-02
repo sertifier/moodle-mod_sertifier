@@ -52,7 +52,9 @@ $table = new html_table();
 $table->head  = array ($strname, get_string('datecreated', 'sertifier'));
 
 foreach ($certificates as $certificate) {
-    $link = html_writer::tag('a', $certificate->name, array('href' => $CFG->wwwroot . '/mod/sertifier/view.php?id=' . $certificate->coursemodule));
+    $link = html_writer::tag('a',
+        $certificate->name,
+        array('href' => $CFG->wwwroot . '/mod/sertifier/view.php?id=' . $certificate->coursemodule));
     $issued = date("M d, Y", $certificate->timecreated);
     $table->data[] = array ($link, $issued);
 }

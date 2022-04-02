@@ -1,0 +1,18 @@
+.path-mod-sertifier .button {
+    display: inline-block;
+    line-height: 28px;
+    padding: 0 16px;
+    border: 2px solid #09705b;
+    font-size: 12px;
+    background: #09705b;
+    color: #fff;
+    border-radius: 5px;
+    margin-right: 15px;
+    transition: all 0.3s ease 0s !important;
+    text-decoration: none;
+}
+.path-mod-sertifier .button:hover {
+    background: #fff;
+    color: #09705b;
+    border-color: #bfe3d9;
+}
