@@ -24,7 +24,7 @@
 
 /**
  * Function to update the sertifier db.
- * 
+ *
  * @param int $oldversion
  */
 function xmldb_sertifier_upgrade($oldversion = 0) {
