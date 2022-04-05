@@ -25,9 +25,12 @@
 /**
  * Function to update the sertifier db.
  */
-function xmldb_sertifier_upgrade() {
+function xmldb_sertifier_upgrade($oldversion = 0) {
 
-    upgrade_mod_savepoint(true, 2021050301, 'sertifier');
+    if ($oldversion < 2021050301) {
+        // Sertifier savepoint reached.
+        upgrade_mod_savepoint(true, 2021050301, 'sertifier');
+    }
 
     return true;
 }
