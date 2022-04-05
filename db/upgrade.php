@@ -26,5 +26,8 @@
  * Function to update the sertifier db.
  */
 function xmldb_sertifier_upgrade() {
+
+    upgrade_mod_savepoint(true, 2021050301, 'sertifier');
+
     return true;
 }
