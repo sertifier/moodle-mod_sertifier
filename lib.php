@@ -26,15 +26,36 @@ use mod_sertifier\apiRest\apiRest;
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * List of features supported in Sertifier module
+ * @param string $feature FEATURE_xx constant for requested feature
+ * @return mixed True if module supports feature, false if not, null if doesn't know
+ */
+function sertifier_supports($feature) {
+    switch($feature) {
+        case FEATURE_BACKUP_MOODLE2:
+            return true;
+
+        default:
+            return null;
+    }
+}
+
+/**
+ * Add certificate instance.
+ *
+ * @param stdObject $post
+ * @return array $certificate new certificate object
+ */
 function sertifier_add_instance($post) {
     global $DB, $CFG;
 
-    $apirest = new apiRest(get_config('sertifier', 'api_key'));
+    $apirest = new apiRest();
 
     if ($post->createDelivery) {
         $response = $apirest->create_delivery($post->deliveryName);
         if ($response->hasError) {
-            print_error($response->message);
+            throw new moodle_exception($response->message);
         } else {
             $url = new moodle_url('/course/modedit.php', [
                 'add' => 'sertifier',
@@ -48,7 +69,7 @@ function sertifier_add_instance($post) {
     } else {
 
         if (!$post->delivery) {
-            print_error("Click the create button to create a new delivery.");
+            throw new moodle_exception("Click the create button to create a new delivery.");
         }
 
         if ( isset($post->users) ) {
@@ -83,10 +104,16 @@ function sertifier_add_instance($post) {
     }
 };
 
+/**
+ * Update certificate instance.
+ *
+ * @param stdClass $post
+ * @return stdClass $certificate updated
+ */
 function sertifier_update_instance($post) {
     global $DB, $CFG;
 
-    $apirest = new apiRest(get_config('sertifier', 'api_key'));
+    $apirest = new apiRest();
 
     if ( isset($post->users) ) {
         $alreadyrecipients = $apirest->get_recipients($post->delivery)->data->recipients;
@@ -124,6 +151,13 @@ function sertifier_update_instance($post) {
     return $DB->update_record('sertifier', $dbrecord);
 };
 
+/**
+ * Given an ID of an instance of this module,
+ * this function will permanently delete the instance.
+ *
+ * @param int $id
+ * @return bool true if successful
+ */
 function sertifier_delete_instance($id) {
     global $DB;
 
@@ -134,11 +168,18 @@ function sertifier_delete_instance($id) {
     return $DB->delete_records('sertifier', array('id' => $id));
 };
 
-function delivery_check($delivery) {
+/**
+ * Checking if the delivery is active.
+ *
+ * @param stdObject $delivery
+ * @return bool true if active
+ */
+function sertifier_delivery_check($delivery) {
     if (
         $delivery->type == 2 &&
         $delivery->detailId != "00000000-0000-0000-0000-000000000000" &&
-        ($delivery->designId != "00000000-0000-0000-0000-000000000000" || $delivery->badgeId != "00000000-0000-0000-0000-000000000000") &&
+        ($delivery->designId != "00000000-0000-0000-0000-000000000000" ||
+            $delivery->badgeId != "00000000-0000-0000-0000-000000000000") &&
         $delivery->emailTemplateId != "00000000-0000-0000-0000-000000000000" &&
         !empty($delivery->emailFromName) &&
         !empty($delivery->mailSubject)
@@ -149,10 +190,17 @@ function delivery_check($delivery) {
     return false;
 }
 
-function credential_exist($deliveryid, $email) {
+/**
+ * Checking if the credential is exist.
+ *
+ * @param string $deliveryid
+ * @param string $email
+ * @return bool true if exist
+ */
+function sertifier_credential_exist($deliveryid, $email) {
     global $DB, $CFG;
 
-    $apirest = new apiRest(get_config('sertifier', 'api_key'));
+    $apirest = new apiRest();
 
     $recipients = $apirest->get_recipients($deliveryid)->data->recipients;
 
@@ -160,15 +208,20 @@ function credential_exist($deliveryid, $email) {
 
     if (in_array($email, $recipientemails)) {
         return true;
-    }else {
+    } else {
         return false;
     }
 }
 
+/**
+ * Quiz submission handler (checks for a completed course)
+ *
+ * @param core/event $event quiz mod attempt_submitted event
+ */
 function sertifier_quiz_submission_handler($event) {
     global $DB, $CFG;
 
-    $apirest = new apiRest(get_config('sertifier', 'api_key'));
+    $apirest = new apiRest();
 
     $attempt = $event->get_record_snapshot('quiz_attempts', $event->objectid);
     $quiz = $event->get_record_snapshot('quiz', $attempt->quiz);
@@ -180,7 +233,7 @@ function sertifier_quiz_submission_handler($event) {
             if ( $record && ($record->finalquiz) ) {
                 if ($quiz->id == $record->finalquiz) {
 
-                    $checkcredential = credential_exist($record->deliveryid, $user->email);
+                    $checkcredential = sertifier_credential_exist($record->deliveryid, $user->email);
 
                     if (!$checkcredential) {
                         $usersgrade = min( ( quiz_get_best_grade($quiz, $user->id) / $quiz->grade ) * 100, 100);
@@ -202,10 +255,15 @@ function sertifier_quiz_submission_handler($event) {
     }
 }
 
+/**
+ * Course completion handler
+ *
+ * @param core/event $event
+ */
 function sertifier_course_completed_handler($event) {
     global $DB, $CFG;
 
-    $apirest = new apiRest(get_config('sertifier', 'api_key'));
+    $apirest = new apiRest();
 
     $user = $DB->get_record('user', array('id' => $event->relateduserid));
 
@@ -213,7 +271,7 @@ function sertifier_course_completed_handler($event) {
     if ($sertifierrecords) {
         foreach ($sertifierrecords as $record) {
             if ($record && $record->completionactivities) {
-                $checkcredential = credential_exist($record->deliveryid, $user->email);
+                $checkcredential = sertifier_credential_exist($record->deliveryid, $user->email);
                 if (!$checkcredential) {
                     $response = $apirest->add_recipients($record->deliveryid, [
                         [

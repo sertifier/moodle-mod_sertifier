@@ -22,6 +22,17 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-function xmldb_sertifier_upgrade() {
+/**
+ * Function to update the sertifier db.
+ *
+ * @param int $oldversion
+ */
+function xmldb_sertifier_upgrade($oldversion = 0) {
+
+    if ($oldversion < 2021050301) {
+        // Sertifier savepoint reached.
+        upgrade_mod_savepoint(true, 2021050301, 'sertifier');
+    }
+
     return true;
 }

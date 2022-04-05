@@ -55,12 +55,8 @@ $string['modulenameplural'] = 'Sertifier certificates/badges';
 $string['datecreated'] = 'Date created';
 $string['indexheader'] = 'All certificates/badges for {$a}';
 $string['nocertificates'] = 'There are no certificates/badges';
+$string['sertifier:addinstance'] = 'Add a certificate/badge instance';
 
-$string['privacy:metadata:sertifier'] = 'The list of activity modules';
-$string['privacy:metadata:sertifier:completionactivities'] = 'Auto-issue criteria: by course completion';
-$string['privacy:metadata:sertifier:name'] = 'Module name';
-$string['privacy:metadata:sertifier:course'] = 'Module Course id';
-$string['privacy:metadata:sertifier:finalquiz'] = 'Auto-issue criteria: by final quiz grade';
-$string['privacy:metadata:sertifier:passinggrade'] = 'Percentage grade needed to pass course';
-$string['privacy:metadata:sertifier:timecreated'] = 'The date the module was created';
-$string['privacy:metadata:sertifier:deliveryid'] = 'Sertifier delivery id';
+$string['privacy:metadata:sertifier'] = 'In order to integrate with sertifier, user data needs to be exchanged with that service.';
+$string['privacy:metadata:sertifier:fullname'] = 'Your full name is sent to the remote system to create credentials.';
+$string['privacy:metadata:sertifier:firstname'] = 'Your email is sent to the remote system to send credentials by email.';
