@@ -24,9 +24,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2021050301;
+$plugin->version   = 2021050302;
 $plugin->requires  = 2020061500;
 $plugin->cron      = 0;
 $plugin->component = 'mod_sertifier';
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = "v1.0.1";
+$plugin->release   = "v1.0.3";
