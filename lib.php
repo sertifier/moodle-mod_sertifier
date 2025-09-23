@@ -52,7 +52,7 @@ function sertifier_add_instance($post) {
 
     $apirest = new apiRest();
 
-    if ($post->createDelivery) {
+    if (isset($post->createDelivery) && $post->createDelivery) {
         $response = $apirest->create_delivery($post->deliveryName);
         if ($response->hasError) {
             throw new moodle_exception($response->message);
