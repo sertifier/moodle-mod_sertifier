@@ -87,6 +87,7 @@ class mod_sertifier_mod_form extends moodleform_mod {
 
         $mform =& $this->_form;
         $mform->addElement('hidden', 'course', $id);
+        $mform->setType('course', PARAM_INT);
         $mform->addElement('header', 'general', get_string('general', 'form'));
         $mform->addElement('static',
             'overview',
@@ -103,6 +104,7 @@ class mod_sertifier_mod_form extends moodleform_mod {
                     get_string('create'),
                     ['style' => 'width: 100px']);
                 $mform->addGroup($newdelivery, 'new_delivery', get_string('createDelivery', 'sertifier'), array(' '), false);
+                $mform->setType('deliveryName', PARAM_TEXT);
             }
 
             if (count($deliveryfilter) > 0) {
@@ -129,6 +131,7 @@ class mod_sertifier_mod_form extends moodleform_mod {
                 get_string('cantchangedelivery', 'sertifier',
                 $deliveryname));
             $mform->addElement('hidden', 'delivery', $sertifiercertificate->deliveryid);
+            $mform->setType('delivery', PARAM_TEXT);
         }
 
         $mform->addElement('text', 'name', get_string('activityname', 'sertifier'), array('style' => 'width: 400px'));
@@ -161,12 +164,14 @@ class mod_sertifier_mod_form extends moodleform_mod {
 
         $mform->addElement('header', 'gradeissue', get_string('gradeissueheader', 'sertifier'));
         $mform->addElement('select', 'finalquiz', get_string('chooseexam', 'sertifier'), $quizchoices);
+        $mform->setType('finalquiz', PARAM_INT);
         $mform->addElement('text', 'passinggrade', get_string('passinggrade', 'sertifier'));
         $mform->setType('passinggrade', PARAM_INT);
         $mform->setDefault('passinggrade', 70);
 
         $mform->addElement('header', 'completionissue', get_string('completionissueheader', 'sertifier'));
         $mform->addElement('checkbox', 'completionactivities', get_string('completionissuecheckbox', 'sertifier'));
+        $mform->setType('completionactivities', PARAM_TEXT);
         if ($updatingcert && isset($sertifiercertificate->completionactivities)) {
             $mform->setDefault('completionactivities', 1);
         }
