@@ -22,12 +22,12 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die;
+defined('MOODLE_INTERNAL') || die();
 if ($ADMIN->fulltree) {
-    $settings->add(
-        new admin_setting_configtext('sertifier/api_key',
+    $settings->add(new admin_setting_configtext(
+        'sertifier/api_key',
         get_string('apikeylabel', 'sertifier'),
         get_string('apikeyhelp', 'sertifier'),
-        '')
-    );
+        ''
+    ));
 }

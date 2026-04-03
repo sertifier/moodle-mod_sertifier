@@ -24,17 +24,17 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$observers = array(
-    array(
+$observers = [
+    [
         'eventname' => '\mod_quiz\event\attempt_submitted',
         'includefile' => '/mod/sertifier/lib.php',
         'callback' => 'sertifier_quiz_submission_handler',
-        'internal' => false
-    ),
-    array(
+        'internal' => false,
+    ],
+    [
         'eventname'   => '\core\event\course_completed',
         'includefile' => '/mod/sertifier/lib.php',
         'callback'    => 'sertifier_course_completed_handler',
-        'internal' => false
-    )
-);
+        'internal' => false,
+    ],
+];

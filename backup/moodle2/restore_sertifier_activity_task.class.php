@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+// This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,14 +12,14 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Define all the backup steps that will be used by the backup_sertifier_activity_task
  * @package    mod_sertifier
  * @subpackage backup-moodle2
  * @copyright  Sertifier <hr@sertifier.com>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -30,7 +30,6 @@ require_once($CFG->dirroot . '/mod/sertifier/backup/moodle2/restore_sertifier_st
  * Sertifier restore task that provides all the settings and steps to perform one complete restore of the activity
  */
 class restore_sertifier_activity_task extends restore_activity_task {
-
     /**
      * Define (add) particular settings this activity can have
      */
@@ -51,9 +50,9 @@ class restore_sertifier_activity_task extends restore_activity_task {
      * processed by the link decoder
      */
     public static function define_decode_contents() {
-        $contents = array();
+        $contents = [];
 
-        $contents[] = new restore_decode_content('sertifier', array('name'), 'sertifier');
+        $contents[] = new restore_decode_content('sertifier', ['name'], 'sertifier');
 
         return $contents;
     }
@@ -63,7 +62,7 @@ class restore_sertifier_activity_task extends restore_activity_task {
      * to the activity to be executed by the link decoder
      */
     public static function define_decode_rules() {
-        $rules = array();
+        $rules = [];
 
         $rules[] = new restore_decode_rule('SERTIFIERINDEX', '/mod/sertifier/index.php?id=$1', 'course');
         $rules[] = new restore_decode_rule('SERTIFIERVIEWBYID', '/mod/sertifier/view.php?id=$1', 'course_module');
@@ -77,7 +76,7 @@ class restore_sertifier_activity_task extends restore_activity_task {
      * one array of objects
      */
     public static function define_restore_log_rules() {
-        $rules = array();
+        $rules = [];
 
         $rules[] = new restore_log_rule('sertifier', 'add', 'view.php?id={course_module}', '{sertifier}');
         $rules[] = new restore_log_rule('sertifier', 'update', 'view.php?id={course_module}', '{sertifier}');
@@ -96,7 +95,7 @@ class restore_sertifier_activity_task extends restore_activity_task {
      * activity level. All them are rules not linked to any module instance (cmid = 0)
      */
     public static function define_restore_log_rules_for_course() {
-        $rules = array();
+        $rules = [];
 
         return $rules;
     }

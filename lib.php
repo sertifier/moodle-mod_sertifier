@@ -24,18 +24,17 @@
 
 use mod_sertifier\apiRest\apiRest;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * List of features supported in Sertifier module
  * @param string $feature FEATURE_xx constant for requested feature
  * @return mixed True if module supports feature, false if not, null if doesn't know
  */
 function sertifier_supports($feature) {
-    switch($feature) {
+    switch ($feature) {
         case FEATURE_BACKUP_MOODLE2:
             return true;
-
+        case FEATURE_MOD_PURPOSE:
+            return MOD_PURPOSE_OTHER;
         default:
             return null;
     }
@@ -61,29 +60,28 @@ function sertifier_add_instance($post) {
                 'add' => 'sertifier',
                 'course' => $post->course,
                 'section' => $post->section,
-                'deliveryId' => $response->data
+                'deliveryId' => $response->data,
             ]);
 
             redirect($url);
         }
     } else {
-
         if (!$post->delivery) {
             throw new moodle_exception("Click the create button to create a new delivery.");
         }
 
-        if ( isset($post->users) ) {
+        if (isset($post->users)) {
             $alreadyrecipientsemail = array_column($apirest->get_recipients($post->delivery)->data->recipients, "email");
             $recipients = [];
             foreach ($post->users as $userid => $issuecertificate) {
                 if ($issuecertificate) {
-                    $user = $DB->get_record('user', array('id' => $userid), '*', MUST_EXIST);
+                    $user = $DB->get_record('user', ['id' => $userid], '*', MUST_EXIST);
                     if (!in_array($user->email, $alreadyrecipientsemail)) {
                         $recipients[] = [
                             "name" => $user->firstname . " " . $user->lastname,
                             "email" => $user->email,
                             "issueDate" => date("Y-m-d"),
-                            "quickPublish" => true
+                            "quickPublish" => true,
                         ];
                     }
                 }
@@ -102,7 +100,7 @@ function sertifier_add_instance($post) {
 
         return $DB->insert_record('sertifier', $dbrecord);
     }
-};
+}
 
 /**
  * Update certificate instance.
@@ -115,12 +113,12 @@ function sertifier_update_instance($post) {
 
     $apirest = new apiRest();
 
-    if ( isset($post->users) ) {
+    if (isset($post->users)) {
         $alreadyrecipients = $apirest->get_recipients($post->delivery)->data->recipients;
         $recipients = [];
         $deletecertificatenos = [];
         foreach ($post->users as $userid => $issuecertificate) {
-            $user = $DB->get_record('user', array('id' => $userid), '*', MUST_EXIST);
+            $user = $DB->get_record('user', ['id' => $userid], '*', MUST_EXIST);
             $key = array_search($user->email, array_column($alreadyrecipients, "email"));
             if ($key !== false) {
                 if (!$issuecertificate) {
@@ -131,7 +129,7 @@ function sertifier_update_instance($post) {
                     "name" => $user->firstname . " " . $user->lastname,
                     "email" => $user->email,
                     "issueDate" => date("Y-m-d"),
-                    "quickPublish" => true
+                    "quickPublish" => true,
                 ];
             }
         }
@@ -149,7 +147,7 @@ function sertifier_update_instance($post) {
     $dbrecord->timecreated = time();
 
     return $DB->update_record('sertifier', $dbrecord);
-};
+}
 
 /**
  * Given an ID of an instance of this module,
@@ -161,12 +159,12 @@ function sertifier_update_instance($post) {
 function sertifier_delete_instance($id) {
     global $DB;
 
-    if (!$certificate = $DB->get_record('sertifier', array('id' => $id))) {
+    if (!$certificate = $DB->get_record('sertifier', ['id' => $id])) {
         return false;
     }
 
-    return $DB->delete_records('sertifier', array('id' => $id));
-};
+    return $DB->delete_records('sertifier', ['id' => $id]);
+}
 
 /**
  * Checking if the delivery is active.
@@ -225,28 +223,25 @@ function sertifier_quiz_submission_handler($event) {
 
     $attempt = $event->get_record_snapshot('quiz_attempts', $event->objectid);
     $quiz = $event->get_record_snapshot('quiz', $attempt->quiz);
-    $user = $DB->get_record('user', array('id' => $event->relateduserid));
+    $user = $DB->get_record('user', ['id' => $event->relateduserid]);
     $sertifierrecords = $DB->get_records('sertifier', ['course' => $event->courseid]);
 
     if ($sertifierrecords) {
         foreach ($sertifierrecords as $record) {
-            if ( $record && ($record->finalquiz) ) {
+            if ($record && ($record->finalquiz)) {
                 if ($quiz->id == $record->finalquiz) {
-
                     $checkcredential = sertifier_credential_exist($record->deliveryid, $user->email);
 
                     if (!$checkcredential) {
-                        $usersgrade = min( ( quiz_get_best_grade($quiz, $user->id) / $quiz->grade ) * 100, 100);
+                        $usersgrade = min((quiz_get_best_grade($quiz, $user->id) / $quiz->grade) * 100, 100);
 
                         if ($usersgrade >= $record->passinggrade) {
-                            $apirest->add_recipients($record->deliveryid, [
-                                [
-                                    "name" => $user->firstname . " " . $user->lastname,
-                                    "email" => $user->email,
-                                    "issueDate" => date("Y-m-d"),
-                                    "quickPublish" => true
-                                ]
-                            ]);
+                            $apirest->add_recipients($record->deliveryid, [[
+                                "name" => $user->firstname . " " . $user->lastname,
+                                "email" => $user->email,
+                                "issueDate" => date("Y-m-d"),
+                                "quickPublish" => true,
+                            ]]);
                         }
                     }
                 }
@@ -265,7 +260,7 @@ function sertifier_course_completed_handler($event) {
 
     $apirest = new apiRest();
 
-    $user = $DB->get_record('user', array('id' => $event->relateduserid));
+    $user = $DB->get_record('user', ['id' => $event->relateduserid]);
 
     $sertifierrecords = $DB->get_records('sertifier', ['course' => $event->courseid]);
     if ($sertifierrecords) {
@@ -278,8 +273,8 @@ function sertifier_course_completed_handler($event) {
                             "name" => $user->firstname . " " . $user->lastname,
                             "email" => $user->email,
                             "issueDate" => date("Y-m-d"),
-                            "quickPublish" => true
-                        ]
+                            "quickPublish" => true,
+                        ],
                     ]);
                 }
             }

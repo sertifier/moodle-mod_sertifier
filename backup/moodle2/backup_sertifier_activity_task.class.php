@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+// This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Defines backup_sertifier_activity_task class
@@ -20,10 +20,10 @@
  * @package     mod_sertifier
  * @category    backup
  * @copyright   Sertifier <hr@sertifier.com>
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die;
+defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/mod/sertifier/backup/moodle2/backup_sertifier_stepslib.php');
 
@@ -31,7 +31,6 @@ require_once($CFG->dirroot . '/mod/sertifier/backup/moodle2/backup_sertifier_ste
  * Provides all the settings and steps to perform one complete backup of the activity
  */
 class backup_sertifier_activity_task extends backup_activity_task {
-
     /**
      * No specific settings for this activity
      */
@@ -54,13 +53,13 @@ class backup_sertifier_activity_task extends backup_activity_task {
     public static function encode_content_links($content) {
         global $CFG;
 
-        $base = preg_quote($CFG->wwwroot.'/mod/sertifier', '#');
+        $base = preg_quote($CFG->wwwroot . '/mod/sertifier', '#');
 
-        $pattern = '#('.$base.'/index\.php\?id=)([0-9]+)#';
+        $pattern = '#(' . $base . '/index\.php\?id=)([0-9]+)#';
         $replacement = '$@SERTIFIERINDEX*$2@$';
         $content = preg_replace($pattern, $replacement, $content);
 
-        $pattern = '#('.$base.'/view\.php\?id=)([0-9]+)#';
+        $pattern = '#(' . $base . '/view\.php\?id=)([0-9]+)#';
         $replacement = '$@SERTIFIERVIEWBYID*$2@$';
         $content = preg_replace($pattern, $replacement, $content);
 

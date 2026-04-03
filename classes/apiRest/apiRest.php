@@ -1,5 +1,5 @@
 <?php
-// This file is part of the Sertifier Certificate module for Moodle - http://moodle.org/
+// This file is part of the Sertifier Certificate module for Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace mod_sertifier\apiRest;
 
@@ -54,51 +54,51 @@ class apiRest {
     /**
      * Add the recipients to the Delivery.
      *
-     * @param string    $deliveryid Id of the Delivery
-     * @param array     $recipients Recipients list
+     * @param string $deliveryid Id of the Delivery
+     * @param array  $recipients Recipients list
      * @return stdClass A status indicating success or failure
      */
     public function add_recipients($deliveryid, $recipients) {
         return $this->client->post("{$this->apibaseurl}/Delivery/AddRecipients", [
             "deliveryId" => $deliveryid,
-            "recipients" => $recipients
+            "recipients" => $recipients,
         ]);
     }
 
     /**
      * Get all Recipients for a specific Delivery.
      *
-     * @param string    $deliveryid Id of the Delivery
+     * @param string $deliveryid Id of the Delivery
      * @return stdClass All Recipients for a specific Delivery.
      */
     public function get_recipients($deliveryid) {
         return $this->client->post("{$this->apibaseurl}/Delivery/ListRecipients", [
-            "id" => $deliveryid
+            "id" => $deliveryid,
         ]);
     }
 
     /**
      * Deletes the recipient and credential corresponding to the given Id.
      *
-     * @param array    $certificatenos Certificate no array
+     * @param array $certificatenos Certificate no array
      * @return stdClass A status indicating success or failure
      */
     public function delete_recipients($certificatenos) {
         return $this->client->post("{$this->apibaseurl}/Recipient/DeleteCertificates", [
-                "certificateNos" => $certificatenos
-            ]);
+            "certificateNos" => $certificatenos,
+        ]);
     }
 
     /**
      * Creates a Delivery.
      *
-     * @param string    $title Delivery title
+     * @param string $title Delivery title
      * @return stdClass A status indicating success or failure
      */
     public function create_delivery($title) {
         return $this->client->post("{$this->apibaseurl}/Moodle/AddDeliveryWithType", [
-                "title" => $title,
-                "type" => 2
-            ]);
+            "title" => $title,
+            "type" => 2,
+        ]);
     }
 }
