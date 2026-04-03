@@ -24,10 +24,10 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2021050304;
+$plugin->version   = 2021050305;
 $plugin->requires  = 2020061500;
 $plugin->supported = [39, 405];
 $plugin->cron      = 0;
 $plugin->component = 'mod_sertifier';
 $plugin->maturity  = MATURITY_STABLE;
-$plugin->release   = "v1.0.5";
+$plugin->release   = "v1.0.6";
