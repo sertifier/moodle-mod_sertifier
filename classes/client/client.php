@@ -55,11 +55,11 @@ class client {
         $token = get_config('sertifier', 'api_key');
         $this->curloptions = [
             'CURLOPT_RETURNTRANSFER' => true,
-            'CURLOPT_HTTPHEADER'     => [
+            'CURLOPT_HTTPHEADER' => [
                 'secretKey: ' . $token,
                 'Content-Type: application/json',
-                'api-version: 2.0'
-            ]
+                'api-version: 2.0',
+            ],
         ];
     }
 

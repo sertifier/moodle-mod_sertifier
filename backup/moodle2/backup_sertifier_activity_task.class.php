@@ -31,7 +31,6 @@ require_once($CFG->dirroot . '/mod/sertifier/backup/moodle2/backup_sertifier_ste
  * Provides all the settings and steps to perform one complete backup of the activity
  */
 class backup_sertifier_activity_task extends backup_activity_task {
-
     /**
      * No specific settings for this activity
      */
@@ -54,13 +53,13 @@ class backup_sertifier_activity_task extends backup_activity_task {
     public static function encode_content_links($content) {
         global $CFG;
 
-        $base = preg_quote($CFG->wwwroot.'/mod/sertifier', '#');
+        $base = preg_quote($CFG->wwwroot . '/mod/sertifier', '#');
 
-        $pattern = '#('.$base.'/index\.php\?id=)([0-9]+)#';
+        $pattern = '#(' . $base . '/index\.php\?id=)([0-9]+)#';
         $replacement = '$@SERTIFIERINDEX*$2@$';
         $content = preg_replace($pattern, $replacement, $content);
 
-        $pattern = '#('.$base.'/view\.php\?id=)([0-9]+)#';
+        $pattern = '#(' . $base . '/view\.php\?id=)([0-9]+)#';
         $replacement = '$@SERTIFIERVIEWBYID*$2@$';
         $content = preg_replace($pattern, $replacement, $content);
 

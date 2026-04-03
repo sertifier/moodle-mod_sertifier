@@ -45,7 +45,6 @@ $PAGE->set_title(format_string($sertifierrecord->name));
 $PAGE->set_heading(format_string($course->fullname));
 
 if (has_capability('mod/sertifier:manage', $context)) {
-
     $credentials = $apirest->get_recipients($sertifierrecord->deliveryid)->data->recipients;
 
     $table = new html_table();
@@ -53,7 +52,7 @@ if (has_capability('mod/sertifier:manage', $context)) {
         get_string('name', 'sertifier'),
         get_string('email', 'sertifier'),
         get_string('credentialNo', 'sertifier'),
-        get_string('issueDate', 'sertifier')
+        get_string('issueDate', 'sertifier'),
     ];
 
     foreach ($credentials as $credential) {
@@ -63,7 +62,7 @@ if (has_capability('mod/sertifier:manage', $context)) {
             $credential->name,
             $credential->email,
             "<a href='$url' target='_blank'>$credential->certificateNo</a>",
-            $date
+            $date,
         ];
     }
 
@@ -75,7 +74,7 @@ if (has_capability('mod/sertifier:manage', $context)) {
     echo html_writer::tag('a', get_string('gotoreports', 'sertifier'), [
         "href" => "https://app.sertifier.com/en/home/reports?deliveryId=" . $sertifierrecord->deliveryid,
         "target" => "_blank",
-        "class" => "button"
+        "class" => "button",
     ]);
 
     echo html_writer::tag('br', null);
@@ -98,7 +97,7 @@ if (has_capability('mod/sertifier:manage', $context)) {
         echo html_writer::tag('a', get_string('viewcredential', 'sertifier'), [
             "href" => "https://verified.cv/en/verify/" . $credential->certificateNo,
             "target" => "_blank",
-            "class" => "button"
+            "class" => "button",
         ]);
     } else {
         echo html_writer::tag('p', get_string('nonexistcertificate', 'sertifier'));

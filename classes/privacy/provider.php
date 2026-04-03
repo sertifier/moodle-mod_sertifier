@@ -33,19 +33,18 @@ use core_privacy\local\metadata\collection;
  */
 class provider implements
     \core_privacy\local\metadata\provider {
-
     /**
      * Provides meta data that is stored about a user with mod_sertifier
      *
      * @param  collection $collection A collection of meta data items to be added to.
-     * @return  collection Returns the collection of metadata.
+     * @return collection Returns the collection of metadata.
      */
-    public static function get_metadata(collection $collection) : collection {
+    public static function get_metadata(collection $collection): collection {
 
         $collection->add_external_location_link('sertifier', [
-                'email' => 'privacy:metadata:sertifier:email',
-                'fullname' => 'privacy:metadata:sertifier:fullname',
-            ], 'privacy:metadata:sertifier');
+            'email' => 'privacy:metadata:sertifier:email',
+            'fullname' => 'privacy:metadata:sertifier:fullname',
+        ], 'privacy:metadata:sertifier');
 
         return $collection;
     }

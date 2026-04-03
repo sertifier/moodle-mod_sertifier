@@ -24,8 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot.'/course/moodleform_mod.php');
-require_once($CFG->dirroot.'/mod/sertifier/lib.php');
+require_once($CFG->dirroot . '/course/moodleform_mod.php');
+require_once($CFG->dirroot . '/mod/sertifier/lib.php');
 
 use mod_sertifier\apiRest\apiRest;
 
@@ -38,7 +38,6 @@ use mod_sertifier\apiRest\apiRest;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mod_sertifier_mod_form extends moodleform_mod {
-
     /**
      * Called to define this moodle form
      *
@@ -91,47 +90,61 @@ class mod_sertifier_mod_form extends moodleform_mod {
         $mform->addElement('hidden', 'course', $id);
         $mform->setType('course', PARAM_INT);
         $mform->addElement('header', 'general', get_string('general', 'form'));
-        $mform->addElement('static',
+        $mform->addElement(
+            'static',
             'overview',
             get_string('overview', 'sertifier'),
-            get_string('activitydescription', 'sertifier'));
+            get_string('activitydescription', 'sertifier')
+        );
         if (!$updatingcert) {
             if ($deliveryid) {
-                $mform->addElement('static', 'edit', '', get_string('createdDelivery', 'sertifier', $deliveryid));
+                $mform->addElement(
+                    'static',
+                    'edit',
+                    '',
+                    get_string('createdDelivery', 'sertifier', $deliveryid)
+                );
             } else {
                 $newdelivery = [];
                 $newdelivery[] =& $mform->createElement('text', 'deliveryName', "Delivery Name", ['style' => 'width: 296px']);
-                $newdelivery[] =& $mform->createElement('submit',
+                $newdelivery[] =& $mform->createElement(
+                    'submit',
                     'createDelivery',
                     get_string('create'),
-                    ['style' => 'width: 100px']);
+                    ['style' => 'width: 100px']
+                );
                 $mform->addGroup($newdelivery, 'new_delivery', get_string('createDelivery', 'sertifier'), [' '], false);
                 $mform->setType('deliveryName', PARAM_TEXT);
             }
 
             if (count($deliveryfilter) > 0) {
-                $mform->addElement('select',
+                $mform->addElement(
+                    'select',
                     'delivery',
                     get_string('selectedDelivery', 'sertifier'),
                     $deliveryfilter,
-                    ['style' => 'width: 400px']);
+                    ['style' => 'width: 400px']
+                );
                 $mform->addRule('delivery', null, 'required', null, 'client');
             } else {
-                $mform->addElement('static',
+                $mform->addElement(
+                    'static',
                     'delivery',
                     get_string('selectedDelivery', 'sertifier'),
-                    get_string('notFoundDelivery', 'sertifier'));
+                    get_string('notFoundDelivery', 'sertifier')
+                );
             }
             if ($deliveryid && array_key_exists($deliveryid, $deliveryfilter)) {
                 $mform->setDefault('delivery', $deliveryid);
             }
         } else {
             $deliveryname = $deliveryfilter[$sertifiercertificate->deliveryid];
-            $mform->addElement('static',
+            $mform->addElement(
+                'static',
                 'selectdelivery',
                 get_string('selectedDelivery', 'sertifier'),
-                get_string('cantchangedelivery', 'sertifier',
-                $deliveryname));
+                get_string('cantchangedelivery', 'sertifier', $deliveryname)
+            );
             $mform->addElement('hidden', 'delivery', $sertifiercertificate->deliveryid);
             $mform->setType('delivery', PARAM_TEXT);
         }
@@ -152,15 +165,15 @@ class mod_sertifier_mod_form extends moodleform_mod {
                         $recipients[$key]->certificateNo .
                         "' target='_blank'>View Credential</a>";
                     $label = $user->firstname . ' ' . $user->lastname . ' - ' . $user->email . ' - ' . $link;
-                    $mform->addElement('advcheckbox', 'users['.$user->id.']', $label);
-                    $mform->setDefault('users['.$user->id.']', 1);
+                    $mform->addElement('advcheckbox', 'users[' . $user->id . ']', $label);
+                    $mform->setDefault('users[' . $user->id . ']', 1);
                 } else {
                     $label = $user->firstname . ' ' . $user->lastname . ' - ' . $user->email;
-                    $mform->addElement('advcheckbox', 'users['.$user->id.']', $label, null, ['group' => 1]);
+                    $mform->addElement('advcheckbox', 'users[' . $user->id . ']', $label, null, ['group' => 1]);
                 }
             } else {
                 $label = $user->firstname . ' ' . $user->lastname . ' - ' . $user->email;
-                $mform->addElement('advcheckbox', 'users['.$user->id.']', $label, null, ['group' => 1]);
+                $mform->addElement('advcheckbox', 'users[' . $user->id . ']', $label, null, ['group' => 1]);
             }
         }
 

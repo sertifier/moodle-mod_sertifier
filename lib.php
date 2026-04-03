@@ -24,15 +24,13 @@
 
 use mod_sertifier\apiRest\apiRest;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * List of features supported in Sertifier module
  * @param string $feature FEATURE_xx constant for requested feature
  * @return mixed True if module supports feature, false if not, null if doesn't know
  */
 function sertifier_supports($feature) {
-    switch($feature) {
+    switch ($feature) {
         case FEATURE_BACKUP_MOODLE2:
             return true;
         case FEATURE_MOD_PURPOSE:
@@ -62,13 +60,12 @@ function sertifier_add_instance($post) {
                 'add' => 'sertifier',
                 'course' => $post->course,
                 'section' => $post->section,
-                'deliveryId' => $response->data
+                'deliveryId' => $response->data,
             ]);
 
             redirect($url);
         }
     } else {
-
         if (!$post->delivery) {
             throw new moodle_exception("Click the create button to create a new delivery.");
         }
@@ -84,7 +81,7 @@ function sertifier_add_instance($post) {
                             "name" => $user->firstname . " " . $user->lastname,
                             "email" => $user->email,
                             "issueDate" => date("Y-m-d"),
-                            "quickPublish" => true
+                            "quickPublish" => true,
                         ];
                     }
                 }
@@ -132,7 +129,7 @@ function sertifier_update_instance($post) {
                     "name" => $user->firstname . " " . $user->lastname,
                     "email" => $user->email,
                     "issueDate" => date("Y-m-d"),
-                    "quickPublish" => true
+                    "quickPublish" => true,
                 ];
             }
         }
@@ -233,18 +230,17 @@ function sertifier_quiz_submission_handler($event) {
         foreach ($sertifierrecords as $record) {
             if ($record && ($record->finalquiz)) {
                 if ($quiz->id == $record->finalquiz) {
-
                     $checkcredential = sertifier_credential_exist($record->deliveryid, $user->email);
 
                     if (!$checkcredential) {
-                        $usersgrade = min( ( quiz_get_best_grade($quiz, $user->id) / $quiz->grade ) * 100, 100);
+                        $usersgrade = min((quiz_get_best_grade($quiz, $user->id) / $quiz->grade) * 100, 100);
 
                         if ($usersgrade >= $record->passinggrade) {
                             $apirest->add_recipients($record->deliveryid, [[
                                 "name" => $user->firstname . " " . $user->lastname,
                                 "email" => $user->email,
                                 "issueDate" => date("Y-m-d"),
-                                "quickPublish" => true
+                                "quickPublish" => true,
                             ]]);
                         }
                     }
@@ -277,8 +273,8 @@ function sertifier_course_completed_handler($event) {
                             "name" => $user->firstname . " " . $user->lastname,
                             "email" => $user->email,
                             "issueDate" => date("Y-m-d"),
-                            "quickPublish" => true
-                        ]
+                            "quickPublish" => true,
+                        ],
                     ]);
                 }
             }

@@ -26,7 +26,6 @@
  * Define the complete sertifier structure for backup, with file and id annotations
  */
 class backup_sertifier_activity_structure_step extends backup_activity_structure_step {
-
     /**
      * Define the structure for the sertifier activity
      * @return void
@@ -36,7 +35,8 @@ class backup_sertifier_activity_structure_step extends backup_activity_structure
         // Define each element separated.
         $sertifier = new backup_nested_element('sertifier', ['id'], [
             'name', 'achievementid', 'description', 'finalquiz',
-            'passinggrade', 'completionactivities', 'timecreated', 'certificatename', 'deliveryid']);
+            'passinggrade', 'completionactivities', 'timecreated', 'certificatename', 'deliveryid',
+        ]);
 
         // Define sources.
         $sertifier->set_source_table('sertifier', ['id' => backup::VAR_ACTIVITYID]);
@@ -46,6 +46,5 @@ class backup_sertifier_activity_structure_step extends backup_activity_structure
 
         // Return the root element (sertifier), wrapped into standard activity structure.
         return $this->prepare_activity_structure($sertifier);
-
     }
 }
