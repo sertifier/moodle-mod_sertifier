@@ -48,14 +48,14 @@ class mod_sertifier_mod_form extends moodleform_mod {
         global $CFG, $DB, $OUTPUT;
         $updatingcert = false;
 
-        if (get_config('sertifier', 'api_key') == null) {
+        if (get_config('sertifier', 'api_key') === null) {
             throw new moodle_exception('Please set your API Key first in the plugin settings.');
         }
 
         $apirest = new apiRest();
 
         $deliveries = $apirest->get_all_deliveries();
-        $deliveryfilter = array();
+        $deliveryfilter = [];
         foreach ($deliveries->data->deliveries as $delivery) {
             if (sertifier_delivery_check($delivery)) {
                 $deliveryfilter[$delivery->id] = $delivery->title;
@@ -67,23 +67,25 @@ class mod_sertifier_mod_form extends moodleform_mod {
             $cmid = optional_param('update', '', PARAM_INT);
             $cm = get_coursemodule_from_id('sertifier', $cmid, 0, false, MUST_EXIST);
             $id = $cm->course;
-            $course = $DB->get_record('course', array('id' => $id), '*', MUST_EXIST);
-            $sertifiercertificate = $DB->get_record('sertifier', array('id' => $cm->instance), '*', MUST_EXIST);
+            $course = $DB->get_record('course', ['id' => $id], '*', MUST_EXIST);
+            $sertifiercertificate = $DB->get_record('sertifier', ['id' => $cm->instance], '*', MUST_EXIST);
             $recipients = $apirest->get_recipients($sertifiercertificate->deliveryid)->data->recipients;
         } else if (optional_param('course', '', PARAM_INT)) {
             $id = optional_param('course', '', PARAM_INT);
-            $course = $DB->get_record('course', array('id' => $id), '*', MUST_EXIST);
+            $course = $DB->get_record('course', ['id' => $id], '*', MUST_EXIST);
         }
 
         $context = context_course::instance($course->id);
         $users = get_enrolled_users($context, "mod/sertifier:view", null, 'u.*');
 
-        $quizchoices = array(0 => 'None');
-        if ($quizes = $DB->get_records_select('quiz', 'course = :course_id', array('course_id' => $id) )) {
+        $quizchoices = [0 => 'None'];
+        if ($quizes = $DB->get_records_select('quiz', 'course = :course_id', ['course_id' => $id])) {
             foreach ($quizes as $quiz) {
                 $quizchoices[$quiz->id] = $quiz->name;
             }
         }
+
+        $deliveryid = optional_param('deliveryId', '', PARAM_TEXT);
 
         $mform =& $this->_form;
         $mform->addElement('hidden', 'course', $id);
@@ -94,16 +96,16 @@ class mod_sertifier_mod_form extends moodleform_mod {
             get_string('overview', 'sertifier'),
             get_string('activitydescription', 'sertifier'));
         if (!$updatingcert) {
-            if (isset($_GET['deliveryId'])) {
-                $mform->addElement('static', 'edit', '', get_string('createdDelivery', 'sertifier', $_GET['deliveryId']));
+            if ($deliveryid) {
+                $mform->addElement('static', 'edit', '', get_string('createdDelivery', 'sertifier', $deliveryid));
             } else {
-                $newdelivery = array();
+                $newdelivery = [];
                 $newdelivery[] =& $mform->createElement('text', 'deliveryName', "Delivery Name", ['style' => 'width: 296px']);
                 $newdelivery[] =& $mform->createElement('submit',
                     'createDelivery',
                     get_string('create'),
                     ['style' => 'width: 100px']);
-                $mform->addGroup($newdelivery, 'new_delivery', get_string('createDelivery', 'sertifier'), array(' '), false);
+                $mform->addGroup($newdelivery, 'new_delivery', get_string('createDelivery', 'sertifier'), [' '], false);
                 $mform->setType('deliveryName', PARAM_TEXT);
             }
 
@@ -112,7 +114,7 @@ class mod_sertifier_mod_form extends moodleform_mod {
                     'delivery',
                     get_string('selectedDelivery', 'sertifier'),
                     $deliveryfilter,
-                    array('style' => 'width: 400px'));
+                    ['style' => 'width: 400px']);
                 $mform->addRule('delivery', null, 'required', null, 'client');
             } else {
                 $mform->addElement('static',
@@ -120,8 +122,8 @@ class mod_sertifier_mod_form extends moodleform_mod {
                     get_string('selectedDelivery', 'sertifier'),
                     get_string('notFoundDelivery', 'sertifier'));
             }
-            if (isset($_GET['deliveryId']) && array_key_exists($_GET['deliveryId'], $deliveryfilter)) {
-                $mform->setDefault('delivery', $_GET['deliveryId']);
+            if ($deliveryid && array_key_exists($deliveryid, $deliveryfilter)) {
+                $mform->setDefault('delivery', $deliveryid);
             }
         } else {
             $deliveryname = $deliveryfilter[$sertifiercertificate->deliveryid];
@@ -134,7 +136,7 @@ class mod_sertifier_mod_form extends moodleform_mod {
             $mform->setType('delivery', PARAM_TEXT);
         }
 
-        $mform->addElement('text', 'name', get_string('activityname', 'sertifier'), array('style' => 'width: 400px'));
+        $mform->addElement('text', 'name', get_string('activityname', 'sertifier'), ['style' => 'width: 400px']);
         $mform->addRule('name', null, 'required', null, 'client');
         $mform->setType('name', PARAM_TEXT);
         $mform->setDefault('name', $course->fullname);
@@ -154,11 +156,11 @@ class mod_sertifier_mod_form extends moodleform_mod {
                     $mform->setDefault('users['.$user->id.']', 1);
                 } else {
                     $label = $user->firstname . ' ' . $user->lastname . ' - ' . $user->email;
-                    $mform->addElement('advcheckbox', 'users['.$user->id.']', $label, null, array('group' => 1));
+                    $mform->addElement('advcheckbox', 'users['.$user->id.']', $label, null, ['group' => 1]);
                 }
             } else {
                 $label = $user->firstname . ' ' . $user->lastname . ' - ' . $user->email;
-                $mform->addElement('advcheckbox', 'users['.$user->id.']', $label, null, array('group' => 1));
+                $mform->addElement('advcheckbox', 'users['.$user->id.']', $label, null, ['group' => 1]);
             }
         }
 

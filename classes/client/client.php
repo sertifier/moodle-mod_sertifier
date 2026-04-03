@@ -1,5 +1,5 @@
 <?php
-// This file is part of the Sertifier Certificate module for Moodle - http://moodle.org/
+// This file is part of the Sertifier Certificate module for Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace mod_sertifier\client;
 
@@ -26,7 +26,7 @@ namespace mod_sertifier\client;
 class client {
     /**
      * The curl object used to make the request.
-     * @var curl $curl
+     * @var \curl $curl
      */
     private $curl;
 
@@ -39,7 +39,7 @@ class client {
     /**
      * Constructor method
      *
-     * @param stdObject $curl a mock curl for testing
+     * @param \curl|null $curl a mock curl for testing
      */
     public function __construct($curl = null) {
         global $CFG;
@@ -53,21 +53,21 @@ class client {
         }
 
         $token = get_config('sertifier', 'api_key');
-        $this->curloptions = array(
+        $this->curloptions = [
             'CURLOPT_RETURNTRANSFER' => true,
-            'CURLOPT_HTTPHEADER'     => array(
-                'secretKey: '.$token,
+            'CURLOPT_HTTPHEADER'     => [
+                'secretKey: ' . $token,
                 'Content-Type: application/json',
                 'api-version: 2.0'
-            )
-        );
+            ]
+        ];
     }
 
     /**
      * Post request
      *
-     * @param string    $url URL to request
-     * @param array     $body Request body
+     * @param string $url URL to request
+     * @param array  $body Request body
      * @return stdClass Request response
      */
     public function post($url, $body) {
@@ -77,9 +77,9 @@ class client {
     /**
      * Create request
      *
-     * @param string    $url URL to request
-     * @param string    $method Request method
-     * @param array     $body Request body
+     * @param string $url URL to request
+     * @param string $method Request method
+     * @param array  $body Request body
      * @return stdClass Request response
      */
     private function create_req($url, $method, $body = null) {

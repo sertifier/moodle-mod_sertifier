@@ -30,15 +30,15 @@ $apirest = new apiRest();
 $id = required_param('id', PARAM_INT);
 
 $cm = get_coursemodule_from_id('sertifier', $id, 0, false, MUST_EXIST);
-$course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-$sertifierrecord = $DB->get_record('sertifier', array('id' => $cm->instance), '*', MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+$sertifierrecord = $DB->get_record('sertifier', ['id' => $cm->instance], '*', MUST_EXIST);
 
 require_login($course->id, false, $cm);
 $context = context_module::instance($cm->id);
 require_capability('mod/sertifier:view', $context);
 
 $PAGE->set_pagelayout('incourse');
-$PAGE->set_url('/mod/sertifier/view.php', array('id' => $cm->id));
+$PAGE->set_url('/mod/sertifier/view.php', ['id' => $cm->id]);
 $PAGE->set_context($context);
 $PAGE->set_cm($cm);
 $PAGE->set_title(format_string($sertifierrecord->name));
@@ -57,28 +57,28 @@ if (has_capability('mod/sertifier:manage', $context)) {
     ];
 
     foreach ($credentials as $credential) {
-        $date = date_format( date_create($credential->createDate), "M d, Y" );
-        $url = 'https://verified.cv/en/verify/'.$credential->certificateNo;
-        $table->data[] = array (
+        $date = date_format(date_create($credential->createDate), "M d, Y");
+        $url = 'https://verified.cv/en/verify/' . $credential->certificateNo;
+        $table->data[] = [
             $credential->name,
             $credential->email,
             "<a href='$url' target='_blank'>$credential->certificateNo</a>",
             $date
-        );
+        ];
     }
 
     echo $OUTPUT->header();
 
-    echo html_writer::tag( 'h3', $sertifierrecord->name);
+    echo html_writer::tag('h3', $sertifierrecord->name);
 
-    echo html_writer::tag( 'p', get_string('viewmanagementdesc', 'sertifier') );
-    echo html_writer::tag( 'a', get_string('gotoreports', 'sertifier'), [
+    echo html_writer::tag('p', get_string('viewmanagementdesc', 'sertifier'));
+    echo html_writer::tag('a', get_string('gotoreports', 'sertifier'), [
         "href" => "https://app.sertifier.com/en/home/reports?deliveryId=" . $sertifierrecord->deliveryid,
         "target" => "_blank",
         "class" => "button"
     ]);
 
-    echo html_writer::tag( 'br', null );
+    echo html_writer::tag('br', null);
     echo html_writer::table($table);
     echo $OUTPUT->footer($course);
 } else {
@@ -91,17 +91,17 @@ if (has_capability('mod/sertifier:manage', $context)) {
         $credential = $credentials[$key];
     }
 
-    echo html_writer::tag( 'h3', $sertifierrecord->name);
+    echo html_writer::tag('h3', $sertifierrecord->name);
 
     if ($credential) {
-        echo html_writer::tag( 'p', get_string('existcertificate', 'sertifier') );
-        echo html_writer::tag( 'a', get_string('viewcredential', 'sertifier'), [
+        echo html_writer::tag('p', get_string('existcertificate', 'sertifier'));
+        echo html_writer::tag('a', get_string('viewcredential', 'sertifier'), [
             "href" => "https://verified.cv/en/verify/" . $credential->certificateNo,
             "target" => "_blank",
             "class" => "button"
         ]);
     } else {
-        echo html_writer::tag( 'p', get_string('nonexistcertificate', 'sertifier') );
+        echo html_writer::tag('p', get_string('nonexistcertificate', 'sertifier'));
     }
 
     echo $OUTPUT->footer($course);
